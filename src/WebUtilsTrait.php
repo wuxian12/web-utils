@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace Wuxian\WebUtils;
 
 use Wuxian\Rbac\Rbac;
+use Wuxian\Rbac\RbacInterface;
 
 trait WebApiTrait
 {
@@ -30,16 +31,14 @@ trait WebApiTrait
     }
 
     //获取用户左侧边栏
-    public static function chekcJwt($userId)
+    public static function chekcJwt(RbacInterface $rbac, $userId)
     {
-        $rbac = new Rbac();
         return $rbac->menu($userId);
     }
 
     //用户是否拥有api访问权限
-    public static function apiAccessible($userId,$apiUrl)
+    public static function apiAccessible(RbacInterface $rbac, $userId, $apiUrl)
     {
-        $rbac = new Rbac();
         return $rbac->permissionIsOk($userId,$apiUrl);
     }
 }
