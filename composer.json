@@ -1,0 +1,23 @@
+{
+    "name": "wuxian/web-utils",
+    "description": "web api interaction standard",
+    "type": "library",
+    "require": {
+        "firebase/php-jwt": "dev-master",
+        "gregwar/captcha": "dev-master",
+        "wuxian12/sgame-rbac": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wuxian12",
+            "email": "827091704@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wuxian\\WebUtils\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
