@@ -31,7 +31,7 @@ trait WebApiTrait
     }
 
     //获取用户左侧边栏
-    public static function chekcJwt(RbacInterface $rbac, $userId)
+    public static function getMenu(RbacInterface $rbac, $userId)
     {
         return $rbac->menu($userId);
     }
@@ -40,5 +40,23 @@ trait WebApiTrait
     public static function apiAccessible(RbacInterface $rbac, $userId, $apiUrl)
     {
         return $rbac->permissionIsOk($userId,$apiUrl);
+    }
+
+    //加密数据
+    public static function encrypt($data)
+    {
+        return $data;
+    }
+
+    //解密数据
+    public static function decrypt($data)
+    {
+        return $data;
+    }
+
+    //是否是post方法
+    public static function isPost($method)
+    {
+        return $method == 'post';
     }
 }
