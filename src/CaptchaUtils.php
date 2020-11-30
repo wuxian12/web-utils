@@ -6,7 +6,7 @@ namespace Wuxian\WebUtils;
 
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
-use Psr\SimpleCache\CacheInterface
+use Psr\SimpleCache\CacheInterface;
 
 class CaptchaUtils
 {
@@ -33,7 +33,7 @@ class CaptchaUtils
         $phraseBuilder = new PhraseBuilder($this->codeLen, $this->getCodeStr());
 
         $builder = new CaptchaBuilder(null, $phraseBuilder);
-     	
+     	$builder->build();
         if(!empty($this->cache)){
         	$cacheKey = $this->prefix.$this->uniqueNum();
         	$this->cache->set($cacheKey,$this->ttl,$builder->getPhrase());
@@ -54,7 +54,7 @@ class CaptchaUtils
 	//验证码字符串
 	public function getCodeStr()
 	{
-		return $this->codeStr();
+		return $this->codeStr;
 	}
 
 	//设置验证码字符串

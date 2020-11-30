@@ -7,10 +7,10 @@ namespace Wuxian\WebUtils;
 use Wuxian\Rbac\Rbac;
 use Wuxian\Rbac\RbacInterface;
 
-trait WebApiTrait
+trait WebUtilsTrait
 {
 
-	/**
+    /**
      * @param integer $code  返回前端的code码  1成功 其它失败
      * @param string $msg   返回给前端的提示语
      * @param [type] $data  返回给前端的数据
@@ -27,7 +27,7 @@ trait WebApiTrait
     //验证jwt
     public static function chekcJwt($authorization, $key)
     {
-    	return JwtUtils::checkToken($authorization, $key);
+        return JwtUtils::checkToken($authorization, $key);
     }
 
     //获取用户左侧边栏
