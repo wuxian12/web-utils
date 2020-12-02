@@ -5,7 +5,7 @@
     "require": {
         "firebase/php-jwt": "dev-master",
         "gregwar/captcha": "dev-master",
-        "wuxian12/sgame-rbac": "dev-main"
+        "wuxian/sgame-rbac": "dev-main"
     },
     "license": "MIT",
     "authors": [
