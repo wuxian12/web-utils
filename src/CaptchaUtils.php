@@ -36,7 +36,7 @@ class CaptchaUtils
      	$builder->build();
         if(!empty($this->cache)){
         	$cacheKey = $this->prefix.$this->uniqueNum();
-        	$this->cache->set($cacheKey,$this->ttl,$builder->getPhrase());
+        	$this->cache->set($cacheKey,$builder->getPhrase(),$this->ttl);
             return ['content' => $builder->inline(), 'key' => $cacheKey];
         }else{
         	return ['content' => $builder->inline(), 'code' => $builder->getPhrase()];

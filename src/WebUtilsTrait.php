@@ -4,7 +4,6 @@ declare (strict_types = 1);
 
 namespace Wuxian\WebUtils;
 
-use Wuxian\Rbac\Rbac;
 use Wuxian\Rbac\RbacInterface;
 
 trait WebUtilsTrait
