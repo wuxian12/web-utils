@@ -16,7 +16,7 @@ class GenRbacCommand extends HyperfCommand
      */
     public function __construct()
     {
-        parent::__construct('gen:Rbac');
+        parent::__construct('gen:rbac');
         $this->setDescription('Create new rbac');
 
     }
@@ -29,11 +29,11 @@ class GenRbacCommand extends HyperfCommand
         // 你想要做的任何操作
         $cnamespace = $this->output->ask('请输入控制器命名空间','App\\Controller');
         $snamespace = $this->output->ask('请输入service层命名空间','App\\Service');
-        $dir = $this->output->ask('请输入文件目录','');
+        $dir = $this->output->ask('请输入文件目录',BASE_PATH);
         $controllerDir = $this->getControllerPath($dir,$cnamespace);
         $serviceDir = $this->getControllerPath($dir,$snamespace);
-        $file = pathinfo($this->genFile($controllerDir,$serviceDir,$cnamespace,$snamespace), PATHINFO_FILENAME);
-        $output->writeln('gen suceess');
+        $this->genFile($controllerDir,$serviceDir,$cnamespace,$snamespace);
+        $this->output->writeln('gen suceess');
     }
 
     public function genFile($controllerDir,$serviceDir,$cnamespace,$snamespace)
@@ -79,6 +79,7 @@ class GenRbacCommand extends HyperfCommand
 
     public function exsitDir($dir)
     {
+        $dir = str_replace('App','app',$dir);
         if(!is_dir($dir)){
             mkdir($dir, 0777, true);
         }

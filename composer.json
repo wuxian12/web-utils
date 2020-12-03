@@ -19,5 +19,10 @@
             "Wuxian\\WebUtils\\": "src/"
         }
     },
+    "extra": {
+        "hyperf": {
+            "config": "Wuxian\\WebUtils\\ConfigProvider"
+        }
+    },
     "minimum-stability": "dev"
 }
