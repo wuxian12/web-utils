@@ -7,13 +7,12 @@ namespace Wuxian\WebUtils\Dao;
 
 class BaseDao
 {
-    protected $query;
-
+    
     public function queryBuild(array $where = [])
     {
         foreach ($where as $k => $v) {
             if(!isset($v[1])){
-                throw new \InvalidArgumentException("参数错误",); 
+                throw new \InvalidArgumentException("参数错误"); 
             }
             switch ($v[1]) {
                 case 'between':
@@ -36,31 +35,37 @@ class BaseDao
                     break;
             }
         }
-        $this->query = $this->query->where($where);
+        $this->query = $this->query->where($where)->orderBy('id','desc');
+        return $this->query;
         
     }
     
     public function countByWhere(array $where = [])
     {
-        return $this->query->queryBuild($where)->count();
+        return $this->queryBuild($where)->count();
     }
 
     
     public function getOne(array $where = [], $field = ["*"])
     {
         if(is_array($field)){
-            return $this->query->queryBuild($where)->first($field);
+            $info = $this->queryBuild($where)->first($field);
+            if(empty($info)){
+                return [];
+            }else{
+                return $info->toArray();
+            }
         }else{
-            return $this->query->queryBuild($where)->value($field);
+            return $this->queryBuild($where)->value($field);
         }
     }
 
     public function get(array $where = [], $field = ["*"])
     {
         if(is_array($field)){
-            return $this->query->queryBuild($where)->get($field);
+            return $this->queryBuild($where)->get($field)->toArray();
         }else{
-            return $this->query->queryBuild($where)->value($field);
+            return $this->queryBuild($where)->pluck($field)->toArray();
         }
     }
 
@@ -85,23 +90,18 @@ class BaseDao
 
     public function delete(array $where)
     {
-        return $this->query->where($where)->delete();
+        return $this->queryBuild($where)->delete();
     }
 
     
     public function updateByWhere($where = [], $data = [])
     {
-        return $this->query->where($where)->update($data);
+        return $this->queryBuild($where)->update($data);
     }
 
     public function page($pageSize, $where = [], $field = ['*'])
     {
-        return $this->query->where($where)->paginate(intval($pageSize), $field, 'page')->toArray();
-    }
-
-    public function pluck($where = [], $field)
-    {
-        return $this->query->where($where)->pluck($field)->toArray();
+        return $this->queryBuild($where)->paginate(intval($pageSize), $field, 'page')->toArray();
     }
 
     

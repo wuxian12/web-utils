@@ -11,13 +11,13 @@ use Hyperf\HttpMessage\Upload\UploadedFile;
  * Class UploadUtils
  * @package Wuxian\WebUtils
  */
-class UploadUtils extends UploadedFile 
+class UploadUtils
 {
     protected $img_path = 'images/'; // 图片目录
     protected $maxSize = 8 * 1024 * 1024; //允许上传的文件大小
     protected $size = 0;
     protected $allowSuffix = ['jpg','bmp','png','gif','svg','jpeg','webp']; //允许的后缀
-    protected $allowMine = ['image/jpg','image/png','image/gif']; //允许的mine
+    protected $allowMine = ['image/jpg','image/jpeg','image/png','image/gif']; //允许的mine
     protected $suffix; // 文件后缀
     protected $newName; //文件新名称
     protected $filemd5; //文件的md5值
@@ -40,7 +40,7 @@ class UploadUtils extends UploadedFile
         //$this->checkSuffix();
         $this->checkMine();
         $target = $this->createNewName();
-        $this->moveTo($target);
+        $file->moveTo($target);
         return $this;
     }
     //设置允许文件上传后缀

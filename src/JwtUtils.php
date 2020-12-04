@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Wuxian\WebUtils;
 
 use Firebase\JWT\JWT;
+use Wuxian\WebUtils\Constants\ErrorCode;
 
 class JwtUtils
 {
-	public static $argumentCode = 4001;  //参数错误码
-	public static $errCode = 5001;  //异常误码
-	public static $expCode = 2;  //过期误码
-    public static $exp = 28800; //token的过期时间
+    public static $exp = 25920000; //token的过期时间
     public static $overtime = 25920000; //刷新token的过期时间
 
     /**
@@ -24,8 +22,9 @@ class JwtUtils
     public static function authorizations(array $info, $key, string $user = 'php'): array
     {
         $access_token = static::createJwt($info, $key, static::$exp, $user);
-        $refresh_token = static::createJwt($info, $key, static::$overtime, $user);
-        return ['token' => $access_token, 'refresh_token' => $refresh_token];
+        return $access_token;//方便前端,去除刷新token
+        // $refresh_token = static::createJwt($info, $key, static::$overtime, $user);
+        // return ['token' => $access_token, 'refresh_token' => $refresh_token];
     }
 
     // 生成token
@@ -47,7 +46,7 @@ class JwtUtils
     public static function checkToken(string $authorization, $key): array
     {
         if (empty($authorization)) {
-            throw new \InvalidArgumentException("沒有Token值", static::$argumentCode);
+            throw new \InvalidArgumentException("沒有Token值", ErrorCode::TOKEN_AVIAL);
         }
         return static::verifyJwt($authorization, $key);
   
@@ -59,18 +58,18 @@ class JwtUtils
         // 处理jwt的值 Bearer
         $jwt_list = explode(" ", $jwt);
         if ($jwt_list[0] != 'Bearer') {
-        	throw new \InvalidArgumentException("Token格式不对", static::$argumentCode);
+        	throw new \InvalidArgumentException("Token格式不对", ErrorCode::TOKEN_AVIAL);
         }
         $jwt = $jwt_list[1];
         try {
             $jwtAuth = json_encode(JWT::decode($jwt, $key, array('HS256')));
             return json_decode($jwtAuth, true);
         } catch (\Firebase\JWT\SignatureInvalidException $e) {
-        	throw new \LogicException("Token格式不对", static::$errCode);
+        	throw new \LogicException("Token格式不对", ErrorCode::TOKEN_AVIAL);
         } catch (\Firebase\JWT\ExpiredException $e) {
-        	throw new \LogicException("Token过期,请重新登陆", static::$expCode);
+        	throw new \LogicException("Token过期,请重新登陆", ErrorCode::TOKEN_AVIAL);
         } catch (\Exception $e) {
-        	throw new \RuntimeException($e->getMessage(), static::$errCode);
+        	throw new \RuntimeException($e->getMessage(), ErrorCode::TOKEN_AVIAL);
            
         }
     }
@@ -86,11 +85,11 @@ class JwtUtils
             $authInfo = array_merge($authInfo, $change_info);
             return static::createJwt($authInfo, $key, static::$exp);
         } catch (\Firebase\JWT\SignatureInvalidException $e) {
-            throw new \LogicException("Token格式不对", static::$errCode);
+            throw new \LogicException("Token格式不对", ErrorCode::TOKEN_AVIAL);
         } catch (\Firebase\JWT\ExpiredException $e) {
-            throw new \LogicException("Token过期,请重新登陆", static::$expCode);
+            throw new \LogicException("Token过期,请重新登陆", ErrorCode::TOKEN_AVIAL);
         } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage(), static::$errCode);
+            throw new \RuntimeException($e->getMessage(), ErrorCode::TOKEN_AVIAL);
         }
     }
 
