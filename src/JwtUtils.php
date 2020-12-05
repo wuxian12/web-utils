@@ -19,7 +19,7 @@ class JwtUtils
      * @return array
      * @Description  生成token
      */
-    public static function authorizations(array $info, $key, string $user = 'php'): array
+    public static function authorizations(array $info, $key, string $user = 'php')
     {
         $access_token = static::createJwt($info, $key, static::$exp, $user);
         return $access_token;//方便前端,去除刷新token
@@ -28,7 +28,7 @@ class JwtUtils
     }
 
     // 生成token
-    public static function createJwt(array $info, $key, int $exp = 0, string $user = 'php'): string
+    public static function createJwt(array $info, $key, int $exp = 0, string $user = 'php')
     {
         $nbf = time();
         empty($exp) ? $exp = static::$exp : '';
@@ -43,7 +43,7 @@ class JwtUtils
         return JWT::encode($token, $key);
     }
 
-    public static function checkToken(string $authorization, $key): array
+    public static function checkToken(string $authorization, $key)
     {
         if (empty($authorization)) {
             throw new \InvalidArgumentException("沒有Token值", ErrorCode::TOKEN_AVIAL);
@@ -53,7 +53,7 @@ class JwtUtils
     }
 
     //校验jwt权限API
-    protected static function verifyJwt(string $jwt, $key): array
+    protected static function verifyJwt(string $jwt, $key)
     {
         // 处理jwt的值 Bearer
         $jwt_list = explode(" ", $jwt);
@@ -78,7 +78,7 @@ class JwtUtils
      * 刷新重新生成并返回token
      * @return array
      */
-    public static function refreshToken(string $refresh_token, $key, array $change_info = []): array
+    public static function refreshToken(string $refresh_token, $key, array $change_info = [])
     {
         try {
             $authInfo = static::verifyJwt($refresh_token, $key);
