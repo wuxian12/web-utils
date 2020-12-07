@@ -14,6 +14,14 @@ class ConfigProvider
             'commands' => [
                 GenRbacCommand::class,
             ],
+            'publish' => [
+                [
+                    'id' => 'config',
+                    'description' => 'The config for rbac.',
+                    'source' => __DIR__ . '/../publish/rbac.php',
+                    'destination' => BASE_PATH . '/config/autoload/rbac.php',
+                ],
+            ],
         ];
     }
 }
