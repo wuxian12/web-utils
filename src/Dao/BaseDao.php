@@ -10,33 +10,33 @@ class BaseDao
     
     public function queryBuild(array $where = [])
     {
+        $query = $this->query->newModelInstance();
         foreach ($where as $k => $v) {
             if(!isset($v[1])){
                 throw new \InvalidArgumentException("参数错误"); 
             }
             switch ($v[1]) {
                 case 'between':
-                    $this->query = $this->query->whereBetween($v[0],$v[2]);
+                    $query = $query->whereBetween($v[0],$v[2]);
                     unset($where[$k]);
                     break;
                 case 'notBetween':
-                    $this->query = $this->query->whereNotBetween($v[0],$v[2]);
+                    $query = $query->whereNotBetween($v[0],$v[2]);
                     unset($where[$k]);
                     break;
                 case 'in':
-                    $this->query = $this->query->whereIn($v[0],$v[2]);
+                    $query = $query->whereIn($v[0],$v[2]);
                     unset($where[$k]);
                     break;
                 case 'notIn':
-                    $this->query = $this->query->whereNotIn($v[0],$v[2]);
+                    $query = $query->whereNotIn($v[0],$v[2]);
                     unset($where[$k]);
                     break;
                 default:
                     break;
             }
         }
-        $this->query = $this->query->where($where)->orderBy('id','desc');
-        return $this->query;
+        return $query->where($where)->orderBy('id','desc');
         
     }
     
