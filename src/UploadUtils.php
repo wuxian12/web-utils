@@ -23,6 +23,7 @@ class UploadUtils
     protected $filemd5; //文件的md5值
     protected $fileold; //文件旧名称
     protected $filemime;
+    protected $path;
 
 
     public function uploadFile($file)
@@ -87,7 +88,7 @@ class UploadUtils
     //获取上传后的路径
     public function getPath()
     {
-        return $this->newName;
+        return $this->path;
     }
     //获取文件名字
     public function getFileName()
@@ -152,7 +153,8 @@ class UploadUtils
         if(!is_dir($dir)){
             mkdir($dir,0777,true);
         }
-        $this->newName = $dir . DIRECTORY_SEPARATOR .uniqid() . '.' . $this->suffix;
-        return $this->newName;
+        $filename = uniqid() . '.' . $this->suffix;
+        $this->path = DIRECTORY_SEPARATOR.$this->img_path.date('Ymd') . DIRECTORY_SEPARATOR .$filename;
+        return $dir . DIRECTORY_SEPARATOR .$filename;
     }
 }
