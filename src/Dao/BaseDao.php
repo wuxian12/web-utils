@@ -10,7 +10,7 @@ class BaseDao
     
     public function queryBuild(array $where = [])
     {
-        $query = $this->query->newModelInstance();
+        $query = $this->query::query();
         foreach ($where as $k => $v) {
             if(!isset($v[1])){
                 throw new \InvalidArgumentException("参数错误"); 
@@ -72,19 +72,19 @@ class BaseDao
 
     public function create(array $data)
     {
-        return $this->query->create($data);
+        return $this->query::query()->create($data);
     }
 
     
     public function insert(array $data)
     {
-        return $this->query->insert($data);
+        return $this->query::query()->insert($data);
     }
 
     
     public function insertGetId(array $data)
     {
-        return $this->query->insertGetId($data);
+        return $this->query::query()->insertGetId($data);
     }
 
 
