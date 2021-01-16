@@ -161,11 +161,11 @@ class HyperfUtils
     }
 
     //grpc客户端
-    public static function grpcClient($data = [], $hostname = '', $options = [], $method = 'aes-256-cbc')
+    public static function grpcClient($data = [], $hostname = '', $options = [])
     {
         $client = new GrpcClientUtils($hostname, $options);
         $request = new Params();
-        $request->setRequest(Json::encode($data));
+        $request->setRequest(json_encode($data));
         $request->setController('\\App\\Service\\Api\\TaskService');
         $request->setMethod('addTask');
 
