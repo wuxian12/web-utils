@@ -149,7 +149,7 @@ class UploadUtils
      */
     protected function createNewName()
     {
-        $dir = env('DOCUMENT_ROOT', BASE_PATH . '/runtime').DIRECTORY_SEPARATOR.$this->img_path.date('Ymd');
+        $dir = env('DOCUMENT_ROOT', BASE_PATH . '/file').DIRECTORY_SEPARATOR.$this->img_path.date('Ymd');
         if(!is_dir($dir)){
             mkdir($dir,0777,true);
         }
