@@ -3,9 +3,9 @@
     "description": "web api interaction standard",
     "type": "library",
     "require": {
-        "firebase/php-jwt": "dev-master",
-        "gregwar/captcha": "dev-master",
-        "wuxian/sgame-rbac": "dev-main"
+        "firebase/php-jwt": "~5.2",
+        "gregwar/captcha": "~1.1",
+        "wuxian/sgame-rbac": "~3.7"
     },
     "license": "MIT",
     "authors": [
