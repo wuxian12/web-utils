@@ -99,9 +99,9 @@ class BaseDao
         return $this->queryBuild($where)->update($data);
     }
 
-    public function page($pageSize, $where = [], $field = ['*'])
+    public function page($pageSize, $where = [], $field = ['*'], $pageName = 'page', $page = 0)
     {
-        return $this->queryBuild($where)->paginate(intval($pageSize), $field, 'page')->toArray();
+        return $this->queryBuild($where)->paginate(intval($pageSize), $field, $pageName, $page)->toArray();
     }
 
     
