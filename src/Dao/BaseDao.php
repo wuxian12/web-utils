@@ -36,7 +36,7 @@ class BaseDao
                     break;
             }
         }
-        return $query->where($where)->orderBy('id','desc');
+        return $query->where($where);
         
     }
     
@@ -46,26 +46,38 @@ class BaseDao
     }
 
     
-    public function getOne(array $where = [], $field = ["*"])
+    public function getOne(array $where = [], $field = ["*"], $order = ['id'=>'desc'])
     {
+        $sql = $this->queryBuild($where);
+        if(!empty($order)){
+            foreach ($order as $k => $v) {
+                $sql->orderBy($k,$v);
+            }
+        }
         if(is_array($field)){
-            $info = $this->queryBuild($where)->first($field);
+            $info = $sql->first($field);
             if(empty($info)){
                 return [];
             }else{
                 return $info->toArray();
             }
         }else{
-            return $this->queryBuild($where)->value($field);
+            return $sql->value($field);
         }
     }
 
-    public function get(array $where = [], $field = ["*"])
+    public function get(array $where = [], $field = ["*"], $order = ['id'=>'desc'])
     {
+        $sql = $this->queryBuild($where);
+        if(!empty($order)){
+            foreach ($order as $k => $v) {
+                $sql->orderBy($k,$v);
+            }
+        }
         if(is_array($field)){
-            return $this->queryBuild($where)->get($field)->toArray();
+            return $sql->get($field)->toArray();
         }else{
-            return $this->queryBuild($where)->pluck($field)->toArray();
+            return $sql->pluck($field)->toArray();
         }
     }
 
@@ -99,9 +111,15 @@ class BaseDao
         return $this->queryBuild($where)->update($data);
     }
 
-    public function page($pageSize, $where = [], $field = ['*'], $pageName = 'page', $page = 0)
+    public function page($pageSize, $where = [], $field = ['*'], $pageName = 'page', $page = 0, $order = ['id'=>'desc'])
     {
-        return $this->queryBuild($where)->paginate(intval($pageSize), $field, $pageName, $page)->toArray();
+        $sql = $this->queryBuild($where);
+        if(!empty($order)){
+            foreach ($order as $k => $v) {
+                $sql->orderBy($k,$v);
+            }
+        }
+        return $sql->paginate(intval($pageSize), $field, $pageName, intval($page))->toArray();
     }
 
     
