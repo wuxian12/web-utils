@@ -13,7 +13,7 @@ class BaseDao
         $query = $this->query::query();
         foreach ($where as $k => $v) {
             if(!isset($v[1])){
-                throw new \InvalidArgumentException("参数错误"); 
+                throw new \InvalidArgumentException("baseDao======sql条件的参数错误"); 
             }
             switch ($v[1]) {
                 case 'between':
